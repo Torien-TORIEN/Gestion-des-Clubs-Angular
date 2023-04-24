@@ -61,8 +61,8 @@
                   </div>
                   <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
-                    <button *ngIf="showUpdateButton" type="submit" class="btn btn-primary" (click)="onUpdate()" data-dismiss="modal">Modifier</button>
-                    <button *ngIf="!showUpdateButton" type="submit" class="btn btn-primary" (click)="onSubmit()" data-dismiss="modal">Enregistrer</button>
+                    <button *ngIf="showUpdateButton" type="submit" class="btn btn-primary" (click)="onUpdate()" data-dismiss="modal" [disabled]="SalleForm.invalid" >Modifier</button>
+                    <button *ngIf="!showUpdateButton" type="submit" class="btn btn-primary" (click)="onSubmit()" data-dismiss="modal" [disabled]="SalleForm.invalid">Enregistrer</button>
                   </div>
                 </div>
               </div>

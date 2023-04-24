@@ -1,276 +1,115 @@
 <div class="main-content">
   <div class="container-fluid">
-      <div class="row">
-          <div class="col-md-12">
-              <div class="card">
-                  <div class="card-header card-header-danger">
-                      <h4 class="card-title ">Simple Table</h4>
-                      <p class="card-category"> Here is a subtitle for this table</p>
-                  </div>
-                  <div class="card-body">
-                      <div class="table-responsive">
-                          <table class="table">
-                              <thead class=" text-primary">
-                                  <th>
-                                      ID
-                                  </th>
-                                  <th>
-                                      Name
-                                  </th>
-                                  <th>
-                                      Country
-                                  </th>
-                                  <th>
-                                      City
-                                  </th>
-                                  <th>
-                                      Salary
-                                  </th>
-                              </thead>
-                              <tbody>
-                                  <tr>
-                                      <td>
-                                          1
-                                      </td>
-                                      <td>
-                                          Dakota Rice
-                                      </td>
-                                      <td>
-                                          Niger
-                                      </td>
-                                      <td>
-                                          Oud-Turnhout
-                                      </td>
-                                      <td class="text-primary">
-                                          $36,738
-                                      </td>
-                                  </tr>
-                                  <tr>
-                                      <td>
-                                          2
-                                      </td>
-                                      <td>
-                                          Minerva Hooper
-                                      </td>
-                                      <td>
-                                          Curaçao
-                                      </td>
-                                      <td>
-                                          Sinaai-Waas
-                                      </td>
-                                      <td class="text-primary">
-                                          $23,789
-                                      </td>
-                                  </tr>
-                                  <tr>
-                                      <td>
-                                          3
-                                      </td>
-                                      <td>
-                                          Sage Rodriguez
-                                      </td>
-                                      <td>
-                                          Netherlands
-                                      </td>
-                                      <td>
-                                          Baileux
-                                      </td>
-                                      <td class="text-primary">
-                                          $56,142
-                                      </td>
-                                  </tr>
-                                  <tr>
-                                      <td>
-                                          4
-                                      </td>
-                                      <td>
-                                          Philip Chaney
-                                      </td>
-                                      <td>
-                                          Korea, South
-                                      </td>
-                                      <td>
-                                          Overland Park
-                                      </td>
-                                      <td class="text-primary">
-                                          $38,735
-                                      </td>
-                                  </tr>
-                                  <tr>
-                                      <td>
-                                          5
-                                      </td>
-                                      <td>
-                                          Doris Greene
-                                      </td>
-                                      <td>
-                                          Malawi
-                                      </td>
-                                      <td>
-                                          Feldkirchen in Kärnten
-                                      </td>
-                                      <td class="text-primary">
-                                          $63,542
-                                      </td>
-                                  </tr>
-                                  <tr>
-                                      <td>
-                                          6
-                                      </td>
-                                      <td>
-                                          Mason Porter
-                                      </td>
-                                      <td>
-                                          Chile
-                                      </td>
-                                      <td>
-                                          Gloucester
-                                      </td>
-                                      <td class="text-primary">
-                                          $78,615
-                                      </td>
-                                  </tr>
-                              </tbody>
-                          </table>
-                      </div>
-                  </div>
-              </div>
+    <div class="card card-plain">
+
+      <div class="col-md-12">
+        <div class="card-header bg-primary">
+          <div class="d-flex justify-content-between align-items-center">
+            <h4 class="card-title mb-0">Ci-dessous les clubs qui sont présents à l'ENICAR</h4>
+            <button *ngIf="isAdmin()" (click)="resetModal()" type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#exampleModal">
+              Ajouter Club
+            </button>              
           </div>
-          <div class="col-md-12">
-              <div class="card card-plain">
-                  <div class="card-header card-header-danger">
-                      <h4 class="card-title mt-0"> Table on Plain Background</h4>
-                      <p class="card-category"> Here is a subtitle for this table</p>
-                  </div>
-                  <div class="card-body">
-                      <div class="table-responsive">
-                          <table class="table table-hover">
-                              <thead class="">
-                                  <th>
-                                      ID
-                                  </th>
-                                  <th>
-                                      Name
-                                  </th>
-                                  <th>
-                                      Country
-                                  </th>
-                                  <th>
-                                      City
-                                  </th>
-                                  <th>
-                                      Salary
-                                  </th>
-                              </thead>
-                              <tbody>
-                                  <tr>
-                                      <td>
-                                          1
-                                      </td>
-                                      <td>
-                                          Dakota Rice
-                                      </td>
-                                      <td>
-                                          Niger
-                                      </td>
-                                      <td>
-                                          Oud-Turnhout
-                                      </td>
-                                      <td>
-                                          $36,738
-                                      </td>
-                                  </tr>
-                                  <tr>
-                                      <td>
-                                          2
-                                      </td>
-                                      <td>
-                                          Minerva Hooper
-                                      </td>
-                                      <td>
-                                          Curaçao
-                                      </td>
-                                      <td>
-                                          Sinaai-Waas
-                                      </td>
-                                      <td>
-                                          $23,789
-                                      </td>
-                                  </tr>
-                                  <tr>
-                                      <td>
-                                          3
-                                      </td>
-                                      <td>
-                                          Sage Rodriguez
-                                      </td>
-                                      <td>
-                                          Netherlands
-                                      </td>
-                                      <td>
-                                          Baileux
-                                      </td>
-                                      <td>
-                                          $56,142
-                                      </td>
-                                  </tr>
-                                  <tr>
-                                      <td>
-                                          4
-                                      </td>
-                                      <td>
-                                          Philip Chaney
-                                      </td>
-                                      <td>
-                                          Korea, South
-                                      </td>
-                                      <td>
-                                          Overland Park
-                                      </td>
-                                      <td>
-                                          $38,735
-                                      </td>
-                                  </tr>
-                                  <tr>
-                                      <td>
-                                          5
-                                      </td>
-                                      <td>
-                                          Doris Greene
-                                      </td>
-                                      <td>
-                                          Malawi
-                                      </td>
-                                      <td>
-                                          Feldkirchen in Kärnten
-                                      </td>
-                                      <td>
-                                          $63,542
-                                      </td>
-                                  </tr>
-                                  <tr>
-                                      <td>
-                                          6
-                                      </td>
-                                      <td>
-                                          Mason Porter
-                                      </td>
-                                      <td>
-                                          Chile
-                                      </td>
-                                      <td>
-                                          Gloucester
-                                      </td>
-                                      <td>
-                                          $78,615
-                                      </td>
-                                  </tr>
-                              </tbody>
-                          </table>
-                      </div>
-                  </div>
+        </div>
+
+        <div class="row row-cols-1 g-4">
+          <div class="col-md-6 mb-4" *ngFor="let club of clubs">
+            <div class="card">
+              <ng-container *ngIf="club.logo">
+                <img [src]="'assets/img/' + club.logo + '.png'" class="card-img-top img-fluid" alt="Logo du club"/>
+              </ng-container>
+              <ng-container *ngIf="!club.logo">
+                <!-- Appel à la méthode setLogo pour initialiser le logo -->
+                {{ setLogo(club) }}
+                <img [src]="'assets/img/' + club.logo + '.png'" class="card-img-top img-fluid" alt="Logo du club"/>
+              </ng-container>
+
+              <div class="card-body">
+                <h3 class="card-title text-center"  style="text-transform: uppercase;"><strong>{{ club.name }}</strong></h3>
+                
+                <h4 class="card-title text-center">Domaine : {{ club.domaine }}</h4>
+                <h4 *ngIf="presidents[club.id]!=null" class="card-title text-center">Président(e) : <span  style="text-transform: uppercase;"> {{ presidents[club.id].name}}</span> {{presidents[club.id].firstname}}</h4>
+                <h4 *ngIf="presidents[club.id]==null" class="card-title text-center">Président(e) : Pas de président</h4>
+                <h4 class="card-title text-center">Créé le :{{ club.createdAt | date : "dd/MM/yyyy" }}</h4>
+                <h4 class="card-title text-center">Membres :{{ club.nbMembers }}</h4>
+                <p class="card-text text-center">{{ club.description }}</p>
+
+                <div class="d-flex justify-content-end">
+                  <a *ngIf="isRespo(club) || isAdmin()" class="btn btn-primary me-2" (click)="showUpdateModal(club)" data-toggle="modal" data-target="#exampleModal">
+                    <i class="fa fa-pencil"></i>
+                  </a>
+                  <a *ngIf="isAdmin()" class="btn btn-danger" (click)="deleteClub(club.id)">
+                    <i class="fa fa-trash"></i>
+                  </a>
+                </div>
               </div>
+            </div>
           </div>
+        </div>
+
       </div>
+
+      <!-- Modal -->
+      <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Ajouter Club </h5>
+              <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <form [formGroup]="ClubForm">
+                    <div class="row">
+                        <div class="col-md-6">
+                          <mat-form-field class="example-full-width">
+                            <input matInput formControlName="logo" placeholder="logo exemple: logo_xx" type="text">
+                          </mat-form-field>
+                        </div>
+                        <div class="col-md-6">
+                          <mat-form-field class="example-full-width">
+                            <input matInput formControlName="createdAt" placeholder="Date de création" type="date">
+                          </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                          <mat-form-field class="example-full-width">
+                            <input matInput formControlName="name" placeholder="Nom du club" type="text"> 
+                          </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label for=""> Domaine </label>
+                            <select formControlName="domaine" name="domaine" class="form-control">
+                                <option *ngFor="let domaine of Domaines" [value]="domaine">{{domaine}}</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    
+                    <div class="row">
+                        <div class="col-md-12">
+                          <label>Description </label>
+                          <mat-form-field class="example-full-width">
+                             <textarea formControlName ="description" matInput placeholder="Resumer ici l'activité du club "></textarea>
+                           </mat-form-field>
+                        </div>
+                    </div>
+                    <!-- <button mat-raised-button type="submit" class="btn btn-danger pull-right">Update Profile</button>
+                    <div class="clearfix"></div> -->
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+              <button *ngIf="showUpdateButton"  type="submit" class="btn btn-primary" (click)="onUpdate()"  data-dismiss="modal" [disabled]="ClubForm.invalid">Modifier</button>
+              <button  *ngIf="!showUpdateButton" type="submit" class="btn btn-primary" (click)="onSubmit()"  data-dismiss="modal" [disabled]="ClubForm.invalid">Enregistrer</button>
+            
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
   </div>
 </div>

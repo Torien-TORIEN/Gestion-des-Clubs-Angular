@@ -1,4 +1,4 @@
-<div class="main-content">
+<!-- <div class="main-content">
   <div class="container-fluid">
     <div class="card">
         <div class="card-header bg-primary">
@@ -95,4 +95,208 @@
             </div>
         </div>
     </div>
-</div>
+</div> -->
+
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header bg-primary">
+                        <h4 class="card-title ">Les Evenements </h4>
+                        <p class="card-category">Ci-dessous les évènements disponibles </p>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead class=" text-primary">
+                                    <th class="text-center">Titre</th>
+                                    <th>Club</th>
+                                    <th>Date</th>
+                                    <th>durée</th>
+                                    <th></th>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let event of eventsAccepted ">
+                                        <td class="text-center">{{event.title}}</td>
+                                        <td> Club</td>
+                                        <td>{{event.date | date : "dd/MM/yyyy"}} </td>
+                                        <td >{{event.duration}} h</td>
+                                        <td class="text-center">
+                                            <a (click)="showDetailModal(event,false)" class="tooltip-test" title="Tooltip" data-toggle="modal" data-target="#detailModal"> details</a>
+                                            <a class="btn btn-primary me-2"  data-toggle="modal" data-target="#exampleModal">
+                                                <i class="fa fa-pencil"></i> 
+                                            </a>
+                                            <a (click)="deleteEvent(event.id)" class="btn btn-danger" >
+                                                <i class="fa fa-trash"></i> 
+                                            </a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <div class="card card-plain">
+                    <div class="card-header bg-primary">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h4 class="card-title mt-0">Les Demandes des Evenements</h4>
+                            <p class="card-category"> Ci-dessous les démandes des évènements des Clubs </p>
+                            <button *ngIf="isRespo()"  type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#exampleModal">
+                              Demander
+                            </button>              
+                          </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead class="">
+                                    <th>Titre</th>
+                                    <th>Club</th>
+                                    <th>Date</th>
+                                    <th>durée</th>
+                                    <th>Actions</th>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let event of demandes " >
+                                        <td>{{event.title}}</td>
+                                        <td> Club</td>
+                                        <td>{{event.date | date : "dd/MM/yyyy"}} </td>
+                                        <td >{{event.duration}} h</td>
+                                        <td class="text-center">
+                                            <a (click)="showDetailModal(event,true)" class="tooltip-test" title="Tooltip" data-toggle="modal" data-target="#detailModal"> details</a>
+                                            <a class="btn btn-primary me-2"  data-toggle="modal" data-target="#exampleModal">
+                                                <i class="fa fa-pencil"></i> 
+                                            </a>
+                                            <a (click)="deleteEvent(event.id)" class="btn btn-danger" >
+                                                <i class="fa fa-trash"></i> 
+                                            </a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>
+
+  <!-- Modal Ajout -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Ajouter un Evènement</h5>
+          <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form [formGroup]="eventForm">
+                <div class="row">
+                    <div class="col-md-6">
+                        <mat-form-field class="example-full-width">
+                        <input formControlName="title" matInput placeholder="Titre " type="text">
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-6">
+                        <mat-form-field class="example-full-width">
+                        <input formControlName="location" matInput placeholder="locale :" type="text">
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <label for="">Clubs:</label>
+                        <select formControlName="clubs" name="domaine" class="form-control">
+                            <option *ngFor="let club of Clubs" [value]="club.id">{{club.name}}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <mat-form-field class="example-full-width">
+                        <input formControlName="date" matInput placeholder="date" type="date">
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-4">
+                        <mat-form-field class="example-full-width">
+                        <input formControlName="duration" matInput placeholder="durée" type="number">
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="">Salle : </label>
+                        <select formControlName="salle" name="domaine" class="form-control">
+                            <option *ngFor="let salle of salles" [value]="salle.id">{{salle.number}} - {{salle.location}}</option>
+                        </select>
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <div class="form-group">
+                                <label class="bmd-label-floating"> Décrire ici les activités de cet évènement , l'heure </label>
+                                <textarea formControlName="description" class="form-control" rows="5"></textarea>
+                            </div>
+                        </div> 
+                    </div>
+                </div>
+                <!-- <button mat-raised-button type="submit" class="btn btn-danger pull-right">Update Profile</button>
+                 --><div class="clearfix"></div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+          <button *ngIf="!showUpdateButton" type="submit" (click)="addEvent()" class="btn btn-primary"  data-dismiss="modal" [disabled]="eventForm.invalid">Enregistrer</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal detail -->
+  <div class="modal fade" id="detailModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 class="modal-title text-center text-primary" id="exampleModalLabel">{{event.title}}</h3>
+          <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <div class="d-flex justify-content-center align-items-center">
+                <h5 class="d-inline mr-3"><u><b>Date</b></u>  : {{event.date | date : "dd MMMM yyyy"}}</h5>
+                <h5 class="d-inline" ><u><b>Durée</b></u>  : {{event.duration }} h</h5>
+            </div>
+            <hr>
+            <div>
+                <h4><u><b>Clubs</b></u> :</h4>
+                <ul *ngFor="let club of clubs[event.id]">
+                    <li>{{club.name}}</li>
+                </ul>
+            </div>
+            <hr>
+            <h4><u><b>Localisation</b></u> : {{event.location}}</h4>
+            <h4 *ngIf="event.salle"> <u><b>Salle N°</b></u>: {{event.salle.number}}</h4>
+            <hr>
+            <div *ngIf="afficherMateriel(event)">
+                <h4><b><u>Matériels réservés</u></b> :</h4>
+                <ul *ngFor="let materiel of event.materiels">
+                    <li>{{materiel.name}}</li>
+                </ul>
+                <hr>
+            </div>
+            <h4><u><b>A propos :</b></u> </h4>
+            <p>{{event.description}}</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+          <button *ngIf="isAdmin() && boutonDemande" type="submit" (click)="accepterDemande(event.id)" class="btn btn-warning"  data-dismiss="modal">Accèpter</button>
+          <button *ngIf="isAdmin() && boutonDemande" type="submit" (click)="refuserDemande(event.id)" class="btn btn-danger"  data-dismiss="modal">Refuser</button>
+          
+        </div>
+      </div>
+    </div>
+  </div>

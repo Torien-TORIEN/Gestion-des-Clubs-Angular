@@ -2,7 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders,HttpErrorResponse } from '@angular/common/http';
 import {catchError , map} from 'rxjs/operators';
 import {Observable,throwError ,Subject } from 'rxjs'
-import { Salle } from '../Models/salle'
+import { Salle } from 'app/Models/salle';
+//import { Salle } from '../Models/salle'
 
 @Injectable({
   providedIn: 'root'
@@ -15,6 +16,11 @@ export class SalleService {
   //GET SALLES
   getSalleList():Observable<Salle[]>{
     return this.httpClient.get<Salle[]>(`${this.baseUrl}`);
+  }
+
+  //GET SALLE
+  getSalleById(id:number):Observable<Salle>{
+    return this.httpClient.get<Salle>(`${this.baseUrl}`+'/'+id);
   }
 
   //ADD SALLE
