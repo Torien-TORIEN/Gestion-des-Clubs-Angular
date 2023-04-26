@@ -10,7 +10,7 @@ import { TypographyComponent } from '../../Views/evenements/typography.component
 import { IconsComponent } from '../../Views/salles/icons.component';
 import { MapsComponent } from '../../Views/matriels/maps.component';
 import { NotificationsComponent } from '../../Views/notifications/notifications.component';
-import { UpgradeComponent } from '../../Views/upgrade/upgrade.component';
+import { UpgradeComponent } from '../../Views/login/upgrade.component';
 import {MatButtonModule} from '@angular/material/button';
 import {MatInputModule} from '@angular/material/input';
 import {MatRippleModule} from '@angular/material/core';

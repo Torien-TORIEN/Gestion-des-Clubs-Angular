@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LOGIN</title>
+</head>
+<body style="background-color:#56baed">
+  <div class="wrapper fadeInDown">
+    <div id="formContent">
+      <!-- Tabs Titles -->
+      <h2 class="active"> S'authentifier </h2>
+      <!-- <h2 class="inactive underlineHover">Sign Up </h2> -->
+  
+      <!-- Icon -->
+      <div class="fadeIn first">
+        <span class="bi fa-person" id="icon"></span>
+        <i class="material-icons">person</i>
+        <!-- <img src="assets/img/login.jpg" id="icon" alt="User Icon" /> -->
+      </div>
+  
+      <!-- Login Form -->
+      <form [formGroup]="loginForm">
+        <input formControlName="email" type="text" id="login" class="fadeIn second" name="login" placeholder="login">
+        <input formControlName="password" type="password" id="password" class="fadeIn second" name="login" placeholder="mot de passe">
+        <input (click)="onSubmit()" type="submit" class="fadeIn fourth" value="se connecter">
+      </form>
+  
+      <!-- Remind Passowrd -->
+      <div id="formFooter">
+        <a class="underlineHover" href="#">Mot de passe oublié?</a>
+      </div>
+  
+    </div>
+  </div>
+</body>
+</html>

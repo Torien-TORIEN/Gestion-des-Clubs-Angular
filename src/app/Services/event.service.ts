@@ -5,18 +5,23 @@ import {Observable,throwError ,Subject } from 'rxjs'
 import { Salle } from '../Models/salle'
 import { Event } from 'app/Models/event';
 import { Club } from 'app/Models/club';
+import { Material } from 'app/Models/material';
 
 @Injectable({
   providedIn: 'root'
 })
 export class EventService {
   private baseUrl="http://localhost:8081/SpringMVC/servlet/events"
+  private materielUrl="http://localhost:8081/SpringMVC/servlet/materials"
   headers = new HttpHeaders().set('Content-Type','application/json');
   constructor(private httpClient:HttpClient) { }
 
    //GET Events
-   getEventList():Observable<Event[]>{
+  getEventList():Observable<Event[]>{
     return this.httpClient.get<Event[]>(`${this.baseUrl}`);
+  }
+  getMaterialList():Observable<Material[]>{
+    return this.httpClient.get<Material[]>(`${this.materielUrl}`);
   }
 
   //GET CLUBS BY EVENT
@@ -29,6 +34,17 @@ export class EventService {
     return this.httpClient.post<Event>(`${this.baseUrl}/clubs/add/${idEv}/${idclub}`,null);
   }
 
+  //DELETE MATERIAL TO CLUB
+  deleteMaterialEvent(idEv:string,idmat:string){
+    this.httpClient.delete<any>(`${this.baseUrl}/material/delete/${idEv}/${idmat}`).subscribe(
+      data=>console.log(data)
+    )
+  }
+  
+  //ADD EVENT TO CLUB
+  addMaterialToEvent(idEv:string,idmat:string):Observable<Event>{
+    return this.httpClient.post<Event>(`${this.baseUrl}/material/add/${idEv}/${idmat}`,null);
+  }
 
   //ACCEPTER UN EVENEMENT
   accepterEvent(id :string){

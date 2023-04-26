@@ -2,6 +2,8 @@ import { Component, OnInit, ElementRef } from '@angular/core';
 import { ROUTES } from '../sidebar/sidebar.component';
 import {Location, LocationStrategy, PathLocationStrategy} from '@angular/common';
 import { Router } from '@angular/router';
+import { LoginService } from 'app/Services/login.service';
+import { User } from 'app/Models/user';
 
 @Component({
   selector: 'app-navbar',
@@ -11,16 +13,21 @@ import { Router } from '@angular/router';
 export class NavbarComponent implements OnInit {
     private listTitles: any[];
     location: Location;
-      mobile_menu_visible: any = 0;
+    mobile_menu_visible: any = 0;
     private toggleButton: any;
     private sidebarVisible: boolean;
+    notifications:Notification[]
+    nbNotification=0
 
-    constructor(location: Location,  private element: ElementRef, private router: Router) {
+    userConnected:User;
+
+    constructor(location: Location,  private element: ElementRef, private router: Router,private loginService:LoginService) {
       this.location = location;
           this.sidebarVisible = false;
     }
 
     ngOnInit(){
+        this.getUser();
       this.listTitles = ROUTES.filter(listTitle => listTitle);
       const navbar: HTMLElement = this.element.nativeElement;
       this.toggleButton = navbar.getElementsByClassName('navbar-toggler')[0];
@@ -121,5 +128,27 @@ export class NavbarComponent implements OnInit {
           }
       }
       return 'Dashboard';
+    }
+
+    logOut(){
+        this.loginService.doLogout();
+    }
+
+    getUser(){
+        // Get the current user from local storage
+        const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+        
+        // Check if there is a current user
+        if(currentUser){
+          // Do something with the current user
+          this.userConnected=currentUser;
+          this.notifications=currentUser.notifications;
+          this.nbNotification=this.notifications.length
+          console.log("Trouvé ")
+          console.log(this.userConnected);
+        }else{
+            console.log("Non Trouvé ")
+        }
+        
     }
 }

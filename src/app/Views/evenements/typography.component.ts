@@ -8,6 +8,8 @@ import { EventService } from 'app/Services/event.service';
 import { Club } from 'app/Models/club';
 import { Salle } from 'app/Models/salle';
 import { ClubService } from 'app/Services/club.service';
+import { Material } from 'app/Models/material';
+import { MaterielService } from 'app/Services/materiel.service';
 
 @Component({
   selector: 'app-typography',
@@ -21,14 +23,16 @@ export class TypographyComponent implements OnInit {
   salleToAdd:Salle=null;
   selectedSalle: Salle;
   Clubs!:Club[];
+  idEvent!:string;
   demandes!:Event[];
   eventsAccepted!:Event[];
   showUpdateButton=false;
   boutonDemande=false;
+  materiels!:Material[];
   clubs: {[key: string]: Club[]} = {};
   event:Event={"id":"Recep","title":"Reception des nouveaux membres ","status":"Oui","date":new Date("2023-04-07"),"description":"description","destination":"All","duration":24,"salle":null,"location":"Annexe","materiels":[]};
 
-  constructor(private formBuilder:FormBuilder,private eventService:EventService,private salleService:SalleService,private clubService:ClubService) { 
+  constructor(private formBuilder:FormBuilder,private materialService:MaterielService ,private eventService:EventService,private salleService:SalleService,private clubService:ClubService) { 
     this.eventForm= this.formBuilder.group(
       { 
         title: ['', Validators.required],
@@ -38,6 +42,7 @@ export class TypographyComponent implements OnInit {
         duration:[Validators.required],
         salle:[null],
         description: ['', Validators.required],
+        materiel:['']
       }, );
   }
 
@@ -45,6 +50,7 @@ export class TypographyComponent implements OnInit {
     this.getEvents();
     this.getSalles();
     this.getClubs();
+    this.getMateriels();
     this.event=this.events[0];//Initialiser event avec n'importe quel évènement
   }
   
@@ -79,6 +85,18 @@ export class TypographyComponent implements OnInit {
     })
   }
 
+  private getMateriels(){
+    this.eventService.getMaterialList().subscribe(
+      (materiels:Material[])=>{
+        console.log(" Materiels :"+materiels);
+        this.materiels=materiels;
+      },
+      (error)=>{
+        console.log("erreur de recuperation de matériels "+error)
+      }
+    )
+  }
+
   deleteEvent(id:string){
     Swal.fire({
       title: 'êtes-vous sûr?',
@@ -107,9 +125,47 @@ export class TypographyComponent implements OnInit {
     });
   }
   
+  addMaterielToEvent(){
+    console.log("idEv="+this.event.id+" idmat= "+this.eventForm.value.materiel)
+    if(this.eventForm.value.materiel==""){
+      console.log("No materiel selectionné !")
+      Swal.fire({
+        icon: 'error',
+        title: 'AUCUN MATERIEL SELECTIONNE !.',
+        text: 'Selectionner un matériel !',
+      })
+    }else{
+      this.eventService.addMaterialToEvent(this.event.id,this.eventForm.value.materiel).subscribe(
+        (res:Event)=>{
+          this.getEvents();
+          const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+              toast.addEventListener('mouseenter', Swal.stopTimer)
+              toast.addEventListener('mouseleave', Swal.resumeTimer)
+            }
+          })
+          
+          Toast.fire({
+            icon: 'success',
+            title: 'un Matériel est affcté avec succès '
+          })
+        },
+        (err)=>{
+          console.log("Erreur d'ajout de materiel "+err)
+          Swal.fire({
+            icon: 'error',
+            title: 'ERREUR !.',
+            text: 'Il y a un problème !',
+          })
+        })
+    }
+  }
 
-
-  
 
   addEvent(){
     if(this.eventForm.invalid){
@@ -257,6 +313,33 @@ export class TypographyComponent implements OnInit {
     });
   }
 
+  showUpdateModal(event:Event){
+    this.showUpdateButton=true;
+    this.idEvent=event.id;
+    this.event=event;
+    console.log("ID EVENT : "+this.idEvent)
+    console.log("Event à modifier est "+event.salle);
+    this.eventForm.patchValue({
+      title:event.title,
+      duration:event.duration,
+      date:event.date,
+      description:event.description,
+      location:event.location
+      
+    });
+    if(event.salle!=null){
+      this.eventForm.patchValue({salle:event.salle.id})
+    }
+  }
+
+  updateEvent(){
+    
+  }
+  
+  addMateriel(){
+
+  }
+
   afficherMateriel(event:Event){
     if(event.materiels==null)
       return null;
@@ -270,6 +353,10 @@ export class TypographyComponent implements OnInit {
     this.event=event;
     console.log(event)
   }
+
+
+
+  
 
   isAdmin(){
     return true;

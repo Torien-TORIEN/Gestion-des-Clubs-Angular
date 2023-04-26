@@ -145,7 +145,7 @@
                         <div class="d-flex justify-content-between align-items-center">
                             <h4 class="card-title mt-0">Les Demandes des Evenements</h4>
                             <p class="card-category"> Ci-dessous les démandes des évènements des Clubs </p>
-                            <button *ngIf="isRespo()"  type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#exampleModal">
+                            <button *ngIf="isRespo()" (click)="resetModal()" type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#exampleModal">
                               Demander
                             </button>              
                           </div>
@@ -168,7 +168,7 @@
                                         <td >{{event.duration}} h</td>
                                         <td class="text-center">
                                             <a (click)="showDetailModal(event,true)" class="tooltip-test" title="Tooltip" data-toggle="modal" data-target="#detailModal"> details</a>
-                                            <a class="btn btn-primary me-2"  data-toggle="modal" data-target="#exampleModal">
+                                            <a class="btn btn-primary me-2" (click)="showUpdateModal(event)" data-toggle="modal" data-target="#exampleModal">
                                                 <i class="fa fa-pencil"></i> 
                                             </a>
                                             <a (click)="deleteEvent(event.id)" class="btn btn-danger" >
@@ -209,12 +209,25 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-12">
+                    <div *ngIf="!showUpdateButton" class="col-md-12">
                         <label for="">Clubs:</label>
                         <select formControlName="clubs" name="domaine" class="form-control">
                             <option *ngFor="let club of Clubs" [value]="club.id">{{club.name}}</option>
                         </select>
                     </div>
+                    <div *ngIf="showUpdateButton" class="col-md-12">
+                        <h4><u><b>Clubs</b></u> :</h4>
+                        <ul *ngFor="let club of clubs[event.id]">
+                            <li>{{club.name}}</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="row"  *ngIf="afficherMateriel(event)">
+                    <h4><b><u>Matériels réservés</u></b> :</h4>
+                    <ul *ngFor="let materiel of event.materiels">
+                        <li>{{materiel.name}}</li>
+                    </ul>
+                    <hr>
                 </div>
                 <div class="row">
                     <div class="col-md-4">
@@ -247,10 +260,33 @@
                 </div>
                 <!-- <button mat-raised-button type="submit" class="btn btn-danger pull-right">Update Profile</button>
                  --><div class="clearfix"></div>
+                <div class="row" *ngIf="showUpdateButton">
+                    <div class="col-md-6">
+                        <label for="">Matériels : </label>
+                        <select formControlName="materiel" name="domaine" class="form-control">
+                            <option *ngFor="let mat of materiels" [value]="mat.id">{{mat.name}}</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <button *ngIf="showUpdateButton" type="submit" (click)="addMaterielToEvent()"  class="btn btn-warning"  data-dismiss="modal" >Ajouter Matériel</button>
+                    </div>
+                </div>
+                <hr>
+                <div class="row" *ngIf="showUpdateButton">
+                    <div class="col-md-6">
+                        <select formControlName="club" name="domaine" class="form-control">
+                            <option *ngFor="let club of Clubs" [value]="club.id">{{club.name}}</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <button *ngIf="showUpdateButton" type="submit" (click)="addMateriel()"  class="btn btn-warning"  data-dismiss="modal" >Ajouter Club</button>
+                    </div>
+                </div>
           </form>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+          <button *ngIf="showUpdateButton" type="submit" (click)="updateEvent()" class="btn btn-primary"  data-dismiss="modal" [disabled]="eventForm.invalid">Modifier</button>
           <button *ngIf="!showUpdateButton" type="submit" (click)="addEvent()" class="btn btn-primary"  data-dismiss="modal" [disabled]="eventForm.invalid">Enregistrer</button>
         </div>
       </div>

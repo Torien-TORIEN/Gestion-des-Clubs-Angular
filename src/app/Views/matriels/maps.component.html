@@ -1,0 +1,74 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="card card-plain">
+          <div class="card-header bg-primary">
+            <div class="d-flex justify-content-between align-items-center">
+              <h4 class="card-title mb-0">Les  materials sont disponibles ci-dessous</h4>
+              <button *ngIf="isAdmin()" (click)="initializeModalButton()" type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#exampleModal">
+                Ajouter Material
+              </button>              
+            </div>
+          </div>
+
+            <div class="row row-cols-3 g-4">
+              <div class="col" *ngFor="let material of Materials">
+                <div class="card">
+                  <div class="card-body">
+                  
+                    <h3 class="card-title text-center fw-bold">Nom: {{material.name}}</h3>
+                    <h3 class="card-title text-center fw-bold">Quantité: {{material.quantity}}</h3>
+                    <p class="card-text text-center ">Description : {{material.description}}</p>
+                    <div *ngIf="isAdmin()" class="d-flex justify-content-end">
+                      <a class="btn btn-primary me-2" (click)="showUpdateModal(material)"  data-toggle="modal" data-target="#exampleModal">
+                          <i class="fa fa-pencil"></i> 
+                      </a>
+                      <a  class="btn btn-danger" (click)="removeMaterial(material.id)">
+                          <i class="fa fa-trash"></i> 
+                      </a>
+                  </div>                  
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+
+            <!-- Modal -->
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">{{modalTitle}}</h5>
+                    <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    <form [formGroup]="MaterialForm">
+                   
+                      <div class="form-group">
+                        <label for="local">Nom :</label>
+                        <input type="text" formControlName="name"  class="form-control" id="name" name="name" [readonly]="showUpdateButton">
+                        
+                      </div>
+                      <div class="form-group">
+                        <label for="numero"> Quantité:</label>
+                        <input type="number" formControlName="quantity"  class="form-control" id="quantity" name="quantity" [readonly]="showUpdateButton">
+                      </div>
+                      <div class="form-group">
+                        <label for="description">Description :</label>
+                        <textarea class="form-control" formControlName="description"  id="description" name="description"></textarea>
+                      </div>
+                    </form>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                    <button *ngIf="showUpdateButton" type="submit" class="btn btn-primary" (click)="onUpdate()" data-dismiss="modal" [disabled]="MaterialForm.invalid" >Modifier</button>
+                    <button *ngIf="!showUpdateButton" type="submit" class="btn btn-primary" (click)="onSubmit()" data-dismiss="modal" [disabled]="MaterialForm.invalid">Enregistrer</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+
+        </div>
+    </div>
+  </div>
